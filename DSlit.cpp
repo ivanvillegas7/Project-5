@@ -12,11 +12,15 @@ DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, double dt_in) {
 
 }
 
-//Method that creates a matrix (random or not) of spins filling it with 1 and -1
+//Method that creates a the potential in a matrix 
 
 void DSlit::create_V(mat& V) {
 
-    // meter v0 en la amtriz xd    
+	//esto hay que retocarlo, poner las paredes y las slits xdd lmao
+
+	V.eye(M_ - 2 , M_ - 2);
+
+	V = v0_ * V;
 
 }
 
@@ -46,11 +50,11 @@ void DSlit::create_AB(cx_mat& A , cx_mat& B, mat V) {
 
 	}
 
-	cx_vec vecr(N);
+	cx_vec vecr(N-1);
 
 	vecr.fill(r);
 
-	cx_vec vecr2(N);
+	cx_vec vecr2(N-3);
 
 	vecr2.fill(r);
 
