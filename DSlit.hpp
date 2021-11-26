@@ -23,17 +23,17 @@ public:
 
 	double h_;
 
-	double dt_;
+	cx_double dt_;
 
 	//Then, we declare also the constructor
 
-	DSlit(double T_in, int M_in, double v0_in , double h_in , double dt_in);
+	DSlit(double T_in, int M_in, double v0_in , double h_in , cx_double dt_in);
 
 		//Finally, we declare some methods for calculating some important things
 
-	void create_V(mat& V);
+	void create_V(cx_mat& V);
 
-	void create_AB(cx_mat& A, cx_mat& B, mat V);
+	void create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V);
 		
 
 };
