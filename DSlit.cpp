@@ -14,15 +14,47 @@ DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, cx_double dt_in) 
 
 //Method that creates a the potential in a matrix 
 
-void DSlit::create_V(cx_mat& V) {
+void DSlit::create_V(cx_mat& V, double w, double s, double a, double xpos) {
 
-	//esto hay que retocarlo, poner las paredes y las slits xdd lmao
+        V.zeros(M_-2, M_-2);
 
-	V.diag(0) = cx_vec(M_-2 , fill::ones);
+        int W = (int)round( (M_-3) * w / 2 );
 
-	V = v0_ * V;
+        int S = (int)round( (M_-3) * s / 2 );
+
+        int A = (int)round( (M_-3) * a );
+
+        int XPOS = (int)round( (M_-3) * xpos );
+
+        for(int j = (XPOS - W); j <= (XPOS + W); j++){
+
+                for(int i = 0; i < (XPOS - (S+A)); i++){
+
+                        V(i,j) = v0_;
+
+                }
+
+
+                for(int i = (XPOS - S); i <= (XPOS + S); i++){
+
+                        V(i,j) = v0_;
+
+                }
+
+
+                for(int i = (XPOS + (S+A) + 1); i < (M_-2); i++){
+
+                        V(i,j) = v0_;
+			
+		}
+
+        }
 
 }
+
+
+
+
 
 void DSlit::create_AB(sp_cx_mat& A , sp_cx_mat& B, cx_mat V) {
 
@@ -92,3 +124,35 @@ void DSlit::evolve_t(sp_cx_mat A, sp_cx_mat B, cx_vec& u) {
 
 }
 
+
+
+
+void DSlit::initial_state(sp_cx_vec& u){
+
+        //Aquí pondremos la función que crea el estado inicial xd
+
+}
+
+
+
+
+double DSlit::probability(sp_cx_vec& u){
+
+        double p = 0.0;
+
+        for (int i = 0; i < M_ - 2; i++) {
+
+                for (int j = 0; j < M_ - 2; j++) {
+
+                        k = i + j * (M_ - 1);
+
+                        p += ( conj(u(K)) * u(k) );
+
+
+
+                }
+
+        }
+
+
+}
