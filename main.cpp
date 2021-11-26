@@ -16,19 +16,5 @@ int main(){
 	my_system.create_V(V);
 
 	my_system.create_AB(A, B , V);
-
-	//V.brief_print();
-
-	//A.brief_print();
-
-	//B.brief_print();
-
-	//V.print();
-
-	//A.print();
-
-	cx_mat Breal = cx_mat(B);
-
-	Breal.print("B:");
-
+	
 }
