@@ -83,3 +83,12 @@ void DSlit::create_AB(sp_cx_mat& A , sp_cx_mat& B, cx_mat V) {
 
 }
 
+void DSlit::evolve_t(sp_cx_mat A, sp_cx_mat B, cx_vec& u) {
+
+	cx_vec b = B * u;
+
+	u = spsolve(A, b);
+
+
+}
+
