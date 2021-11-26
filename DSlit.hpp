@@ -31,12 +31,15 @@ public:
 
 	//Finally, we declare some methods for calculating some important things
 
-	void create_V(cx_mat& V);
+	void create_V(cx_mat& V, double w, double s, double a, double xpos);
 
 	void create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V);
 
 	void evolve_t(sp_cx_mat A, sp_cx_mat B, cx_vec& u);
+	
+	void initial_state(sp_cx_vec& u);
 
+        double probability(sp_cx_vec& u);
 
 };
 #endif
