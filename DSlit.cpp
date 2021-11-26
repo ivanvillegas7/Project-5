@@ -50,26 +50,36 @@ void DSlit::create_AB(sp_cx_mat& A , sp_cx_mat& B, cx_mat V) {
 
 	}
 
-	cx_vec vecr(N-1);
 
+
+	cx_vec vecr(M_ - 3);
 	vecr.fill(r);
 
-	cx_vec vecr2(N-3);
-
+	cx_vec vecr2(M_ - 2);
 	vecr2.fill(r);
 
 
-	A.diag(0) = a;
-	A.diag(1) = -vecr;
-	A.diag(3) = -vecr2;
-	A.diag(-1) = -vecr;
-	A.diag(-3) = -vecr2;
+	sp_cx_mat A1(M_ - 2, M_ - 2 );
+	A1.diag(1) = -vecr;
+	A1.diag(-1) = -vecr;
 
+	sp_cx_mat A2(M_ - 2, M_ - 2);
+	A2.diag(0) = - vecr2;
+
+	sp_cx_mat A3(M_ - 2, M_ - 2);
+	
+
+	sp_cx_mat Aa = join_horiz(A1, A2, A3);
+	sp_cx_mat Ab= join_horiz(A2, A1, A2);
+	sp_cx_mat Ac= join_horiz(A3, A2, A1);
+
+	A = join_vert(Aa, Ab, Ac);
+	B = -1.0 * join_vert(Aa, Ab, Ac);
+
+	A.diag(0) = a;
+	
 	B.diag(0) = b;
-	B.diag(1) = vecr;
-	B.diag(3) = vecr2;
-	B.diag(-1) = vecr;
-	B.diag(-3) = vecr2;
+	
 
 }
 

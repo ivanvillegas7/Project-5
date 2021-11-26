@@ -27,6 +27,8 @@ int main(){
 
 	//A.print();
 
-	B.print();
+	cx_mat Breal = cx_mat(B);
+
+	Breal.print("B:");
 
 }
