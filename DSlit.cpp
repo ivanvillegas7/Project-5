@@ -164,8 +164,6 @@ cx_double DSlit::probability(cx_vec& u) {
 
 void DSlit::initial_state(cx_vec& u) {
 
-	//Aquí pondremos la función que crea el estado inicial xd, no da risa
-
 	vec x = linspace(0, 1, M_ - 1);
 	vec y = linspace(0, 1, M_ - 1);
 
@@ -181,7 +179,7 @@ void DSlit::initial_state(cx_vec& u) {
 
 	if (roundf( norm(probability(u)) * 100000000.0) / 100000000.0 != 1) {
 		
-	u = u * sqrt(1 / norm(probability(u)));
+		u = u * sqrt(1 / norm(probability(u)));
 
 	}
 
