@@ -179,9 +179,9 @@ void DSlit::initial_state(cx_vec& u) {
 
 	}
 
-	if (roundf(norm((probability(u) * 100) / 100)) != 1 ){
-
-
+	if (roundf( norm(probability(u)) * 100000000.0) / 100000000.0 != 1) {
+		
+	u = u * sqrt(1 / norm(probability(u)));
 
 	}
 
