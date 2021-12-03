@@ -27,20 +27,24 @@ public:
 	cx_double dt_;
 
 	double xc_;
-	
+
 	double sx_;
-	
+
 	double px_;
-	
-	double yc_; 
-	
+
+	double yc_;
+
 	double sy_;
-	
+
 	double py_;
+
+
 
 	//Then, we declare also the constructor
 
 	DSlit(double T_in, int M_in, double v0_in, double h_in, cx_double dt_in, double xc_in, double sx_in, double px_in, double yc_in, double sy_in, double py_in);
+
+
 
 	//Finally, we declare some methods for calculating some important things
 
@@ -48,7 +52,7 @@ public:
 
 	void create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V);
 
-	void evolve_t(sp_cx_mat A, sp_cx_mat B, cx_vec& u);
+	void evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec& u);
 
 	void initial_state(cx_vec& u);
 

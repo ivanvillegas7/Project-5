@@ -1,5 +1,6 @@
 #include "DSlit.hpp"
 
+
 DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, cx_double dt_in, double xc_in, double sx_in, double px_in, double yc_in, double sy_in, double py_in) {
 
 	//We assign the introduced values to the member variables
@@ -18,7 +19,10 @@ DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, cx_double dt_in, 
 
 }
 
-//Method that creates a the potential in a matrix 
+
+
+
+//Method that creates a the potential in a matrix form
 
 void DSlit::create_V(cx_mat& V, double w, double s, double a, double xpos) {
 
@@ -119,14 +123,19 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
 }
 
-void DSlit::evolve_t(sp_cx_mat A, sp_cx_mat B, cx_vec& u) {
+
+
+
+void DSlit::evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec& u) {
 
 	cx_vec b = B * u;
 
 	u = spsolve(A, b);
 
-
 }
+
+
+
 
 cx_double DSlit::probability(cx_vec& u) {
 
@@ -142,8 +151,6 @@ cx_double DSlit::probability(cx_vec& u) {
 
 			p += (std::conj(u(k)) * u(k));
 
-
-
 		}
 
 	}
@@ -151,6 +158,9 @@ cx_double DSlit::probability(cx_vec& u) {
 	return(p);
 
 }
+
+
+
 
 void DSlit::initial_state(cx_vec& u) {
 
@@ -169,13 +179,10 @@ void DSlit::initial_state(cx_vec& u) {
 
 	}
 
-	if (roundf(norm((probability(u) * 100) / 100)) == 1 ){
+	if (roundf(norm((probability(u) * 100) / 100)) != 1 ){
 
-	
-			
+
+
 	}
-
-
-
 
 }
