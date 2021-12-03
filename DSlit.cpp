@@ -1,3 +1,4 @@
+
 #include "DSlit.hpp"
 
 
@@ -72,19 +73,46 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
 	cx_double r = 1.0 * 1.0i * dt_ / (2 * h_ * h_);
 
-	cx_vec a(N);
+	cx_vec veca(N);
 
-	cx_vec b(N);
+	cx_vec vecb(N);
 
 	for (int i = 0; i < M_ - 2; i++) {
 
 		for (int j = 0; j < M_ - 2; j++) {
 
-			k = i + j * (M_ - 1);
+			k = i + j * (M_ - 2);
 
-			a[k] = 1.0 + 4.0 * r + 1.0i * dt_ * V(i, j) * 0.5;
+			veca(k) = 1.0 + 4.0 * r + 1.0i * dt_ * V(i, j) * 0.5;
 
-			b[k] = 1.0 - 4.0 * r - 1.0i * dt_ * V(i, j) * 0.5;
+			vecb(k) = 1.0 - 4.0 * r - 1.0i * dt_ * V(i, j) * 0.5;
+
+		}
+
+	}
+
+
+	A.diag(0) = veca;
+	A.diag(1) = -r;
+	A.diag(-1) = -r;
+	A.diag(M_ - 2) = -r;
+	A.diag( -(M_ - 2) = -r;
+
+        B.diag(0) = vecb;
+	B.diag(1) = -r;
+	B.diag(-1) = -r;
+	B.diag(M_- 2) = -r;
+	B.diag( -(M_ - 2)) = -r:
+
+
+	for(int i = 0; i < N; i++){
+
+		for(int j = 0; j < N; j++){
+
+			if( ( ((i+1)%(M_ - 2)) == 0 ) && ( ((j+1)%(M_ - 2)) == 0 ) ){
+
+
+				A(i, j) = 0;
 
 		}
 
@@ -92,11 +120,12 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
 
 
-	cx_vec vecr(M_ - 3);
+	/*cx_vec vecr(M_ - 3);
 	vecr.fill(r);
 
 	cx_vec vecr2(M_ - 2);
 	vecr2.fill(r);
+
 
 
 	sp_cx_mat A1(M_ - 2, M_ - 2);
@@ -108,7 +137,6 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
 	sp_cx_mat A3(M_ - 2, M_ - 2);
 
-
 	sp_cx_mat Aa = join_horiz(A1, A2, A3);
 	sp_cx_mat Ab = join_horiz(A2, A1, A2);
 	sp_cx_mat Ac = join_horiz(A3, A2, A1);
@@ -116,9 +144,9 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 	A = join_vert(Aa, Ab, Ac);
 	B = -1.0 * join_vert(Aa, Ab, Ac);
 
-	A.diag(0) = a;
+	A.diag(0) = veca;
 
-	B.diag(0) = b;
+	B.diag(0) = vecb;*/
 
 
 }
@@ -147,7 +175,7 @@ cx_double DSlit::probability(cx_vec& u) {
 
 		for (int j = 0; j < M_ - 2; j++) {
 
-			k = i + j * (M_ - 1);
+			k = i + j * (M_ - 2);
 
 			p += (std::conj(u(k)) * u(k));
 
@@ -171,14 +199,16 @@ void DSlit::initial_state(cx_vec& u) {
 
 		for (int j = 0; j < M_ - 1; j++) {
 
-			u(i, j) = exp(-(x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) - (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
+			k = i + j * (M_ - 2);
+
+			u(k) = exp(-(x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) - (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
 
 		}
 
 	}
 
 	if (roundf( norm(probability(u)) * 100000000.0) / 100000000.0 != 1) {
-		
+
 		u = u * sqrt(1 / norm(probability(u)));
 
 	}
