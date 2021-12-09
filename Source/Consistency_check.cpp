@@ -1,3 +1,5 @@
+
+
 #include "DSlit.hpp"
 
 
@@ -19,7 +21,7 @@ int main(){
 
 	//After that, we create our system and the needed matrices
 
-        DSlit my_system( SP(2) , 1/SP(0), SP(9), SP(0), SP(1), SP(3), SP(4), SP(5), SP(6), SP(7), SP(8));
+        DSlit my_system( SP(2) , 1/SP(0)+1, SP(9), SP(0), SP(1), SP(3), SP(4), SP(5), SP(6), SP(7), SP(8));
 
         int N = (my_system.M_ - 2) * (my_system.M_ - 2);
 
@@ -58,23 +60,39 @@ int main(){
 
 	int n = 1;
 
-	cx_vec P = cx_vec(n, fill::ones);
+	/*cx_vec P(1);
+
+	P(0) = my_system.probability(u);
+
+	cx_vec p(1);
+
+	P.print("Probability:");*/
+
+	ofile << (1.0 - real(my_system.probability(u))) << endl;
 
 
 
 	//Finally, we can evolve the system in one step in time
 
-	while(t <= my_system.T_){
+	while(t < my_system.T_){
 
 		my_system.evolve_u(A, B, u);
 
-		ofile << my_system.probability(u) << endl;
+		ofile << (1.0 - real(my_system.probability(u))) << endl;
 
-		t++;
+	    	/*p(0) = my_system.probability(u);
+    		P.insert_rows(P.n_rows, p.row(0));*/
+
+		t = t + my_system.dt_;
 
 		n++;
 
 	}
+
+
+	/*P.print("Probability:");
+
+	P.save("Consistency_check.txt");*/
 
 	ofile.close();
 

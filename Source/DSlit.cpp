@@ -186,14 +186,10 @@ void DSlit::initial_state(cx_vec& u) {
 
 	}
 
-	u.print("u before:");
-
 	if ( (roundf(real(probability(u)) * 100000000.0) / 100000000.0) != 1) {
 
 		u = u * sqrt( 1 / (real(probability(u))));
 
 	}
-
-	u.print("u after:");
 
 }
