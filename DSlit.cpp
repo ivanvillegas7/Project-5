@@ -91,126 +91,127 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
 	}
 
+	cx_vec vecr(N - 1);
+	vecr.fill(r);
+
+	cx_vec vecr2(N - M_ + 2);
+	vecr2.fill(r);
 
 	A.diag(0) = veca;
-	A.diag(1) = -r;
-	A.diag(-1) = -r;
-	A.diag(M_ - 2) = -r;
-	A.diag( -(M_ - 2) = -r;
+	A.diag(1) = -vecr;
+	A.diag(-1) = -vecr;
+	A.diag(M_ - 2) = -vecr2;
+	A.diag(-(M_ - 2)) = -vecr2;
 
-        B.diag(0) = vecb;
-	B.diag(1) = -r;
-	B.diag(-1) = -r;
-	B.diag(M_- 2) = -r;
-	B.diag( -(M_ - 2)) = -r:
+	B.diag(0) = vecb;
+	B.diag(1) = -vecr;
+	B.diag(-1) = -vecr;
+	B.diag(M_ - 2) = -vecr2;
+	B.diag(-(M_ - 2)) = -vecr2;
 
 
-	for(int i = 0; i < N; i++){
+	for (int i = 0; i < N; i++) {
 
-		for(int j = 0; j < N; j++){
+		for (int j = 0; j < N; j++) {
 
-			if( ( ((i+1)%(M_ - 2)) == 0 ) && ( ((j+1)%(M_ - 2)) == 0 ) ){
+			if ((((i + 1) % (M_ - 2)) == 0) && (((j + 1) % (M_ - 2)) == 0)) {
 
 
 				A(i, j) = 0;
 
-		}
-
-	}
-
-
-
-	/*cx_vec vecr(M_ - 3);
-	vecr.fill(r);
-
-	cx_vec vecr2(M_ - 2);
-	vecr2.fill(r);
-
-
-
-	sp_cx_mat A1(M_ - 2, M_ - 2);
-	A1.diag(1) = -vecr;
-	A1.diag(-1) = -vecr;
-
-	sp_cx_mat A2(M_ - 2, M_ - 2);
-	A2.diag(0) = -vecr2;
-
-	sp_cx_mat A3(M_ - 2, M_ - 2);
-
-	sp_cx_mat Aa = join_horiz(A1, A2, A3);
-	sp_cx_mat Ab = join_horiz(A2, A1, A2);
-	sp_cx_mat Ac = join_horiz(A3, A2, A1);
-
-	A = join_vert(Aa, Ab, Ac);
-	B = -1.0 * join_vert(Aa, Ab, Ac);
-
-	A.diag(0) = veca;
-
-	B.diag(0) = vecb;*/
-
-
-}
-
-
-
-
-void DSlit::evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec& u) {
-
-	cx_vec b = B * u;
-
-	u = spsolve(A, b);
-
-}
-
-
-
-
-cx_double DSlit::probability(cx_vec& u) {
-
-	cx_double p = 0.0;
-
-	int k;
-
-	for (int i = 0; i < M_ - 2; i++) {
-
-		for (int j = 0; j < M_ - 2; j++) {
-
-			k = i + j * (M_ - 2);
-
-			p += (std::conj(u(k)) * u(k));
+			}
 
 		}
 
+
+
+		/*
+
+
+
+		sp_cx_mat A1(M_ - 2, M_ - 2);
+		A1.diag(1) = -vecr;
+		A1.diag(-1) = -vecr;
+
+		sp_cx_mat A2(M_ - 2, M_ - 2);
+		A2.diag(0) = -vecr2;
+
+		sp_cx_mat A3(M_ - 2, M_ - 2);
+
+		sp_cx_mat Aa = join_horiz(A1, A2, A3);
+		sp_cx_mat Ab = join_horiz(A2, A1, A2);
+		sp_cx_mat Ac = join_horiz(A3, A2, A1);
+
+		A = join_vert(Aa, Ab, Ac);
+		B = -1.0 * join_vert(Aa, Ab, Ac);
+
+		A.diag(0) = veca;
+
+		B.diag(0) = vecb;*/
+
+
 	}
 
-	return(p);
-
-}
 
 
 
+	void DSlit::evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec& u){
 
-void DSlit::initial_state(cx_vec& u) {
+		cx_vec b = B * u;
 
-	vec x = linspace(0, 1, M_ - 1);
-	vec y = linspace(0, 1, M_ - 1);
+		u = spsolve(A, b);
 
-	for (int i = 0; i < M_ - 1; i++) {
+	}
 
-		for (int j = 0; j < M_ - 1; j++) {
 
-			k = i + j * (M_ - 2);
 
-			u(k) = exp(-(x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) - (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
+
+	cx_double DSlit::probability(cx_vec& u){
+
+		cx_double p = 0.0;
+
+		int k;
+
+		for (int i = 0; i < M_ - 2; i++) {
+
+			for (int j = 0; j < M_ - 2; j++) {
+
+				k = i + j * (M_ - 2);
+
+				p += (std::conj(u(k)) * u(k));
+
+			}
+
+		}
+
+		return(p);
+
+	}
+
+
+
+
+	void DSlit::initial_state(cx_vec & u) {
+
+		vec x = linspace(0, 1, M_ - 1);
+		vec y = linspace(0, 1, M_ - 1);
+
+		for (int i = 0; i < M_ - 1; i++) {
+
+			for (int j = 0; j < M_ - 1; j++) {
+
+				k = i + j * (M_ - 2);
+
+				u(k) = exp(-(x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) - (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
+
+			}
+
+		}
+
+		if (roundf(norm(probability(u)) * 100000000.0) / 100000000.0 != 1) {
+
+			u = u * sqrt(1 / norm(probability(u)));
 
 		}
 
 	}
-
-	if (roundf( norm(probability(u)) * 100000000.0) / 100000000.0 != 1) {
-
-		u = u * sqrt(1 / norm(probability(u)));
-
-	}
-
-}
