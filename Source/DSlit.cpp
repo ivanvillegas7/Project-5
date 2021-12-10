@@ -24,7 +24,7 @@ DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, double dt_in, dou
 
 //Method that creates a the potential in a matrix form
 
-void DSlit::create_V(cx_mat& V, double w, double s, double a, double xpos) {
+void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos) {
 
 	V.zeros(M_ - 2, M_ - 2);
 
@@ -36,23 +36,73 @@ void DSlit::create_V(cx_mat& V, double w, double s, double a, double xpos) {
 
 	int XPOS = (int)round((M_ - 3) * xpos);
 
+	int YHALF = (int)round((M_ - 3) * 0.5);
+
+
 	for (int j = (XPOS - W); j <= (XPOS + W); j++) {
 
-		for (int i = 0; i < (XPOS - (S + A)); i++) {
+		if (n == 1){
 
-			V(i, j) = v0_;
+			for (int i = 0; i <= (YHALF - (int)round(A/2)); i++){
+
+				V(i,j) = v0_;
+
+			}
+
+        	}
+
+
+
+	        if (n == 2){
+
+			for (int i = 0; i < (YHALF - (S + A)); i++) {
+
+                                V(i, j) = v0_;
+
+                        }
+
+                        for (int i = (YHALF - S); i <= (YHALF + S); i++) {
+
+                                V(i, j) = v0_;
+
+                        }
+
+                        for (int i = (YHALF + (S + A)); i < (M_ - 2); i++) {
+
+                                V(i, j) = v0_;
+
+                        }
+
 
 		}
 
-		for (int i = (XPOS - S); i <= (XPOS + S); i++) {
 
-			V(i, j) = v0_;
+		if (n == 3){
 
-		}
+			for (int i = 0; i < (YHALF - (S + A + (int)round(A/2))); i++) {
 
-		for (int i = (XPOS + (S + A) + 1); i < (M_ - 2); i++) {
+                                V(i, j) = v0_;
 
-			V(i, j) = v0_;
+                        }
+
+                        for (int i = (YHALF - (S + (int)round(A/2))); i <= (YHALF - (int)round(A/2)); i++) {
+
+                                V(i, j) = v0_;
+
+                        }
+
+                        for (int i = (YHALF + (int)round(A/2)); i <= (YHALF + ( S + (int)round(A/2))); i++) {
+
+                                V(i, j) = v0_;
+
+                        }
+
+
+                        for (int i = (YHALF + (S + A + (int)round(A/2))); i < (M_ - 2); i++) {
+
+                                V(i, j) = v0_;
+
+                        }
 
 		}
 
@@ -174,22 +224,20 @@ void DSlit::initial_state(cx_vec& u) {
 
 	int k;
 
-	for (int l = 1; l < M_ - 1; l++) {
+	for (int i = 1; i < M_ - 1; i++) {
 
 		for (int j = 1; j < M_ - 1; j++) {
 
-			k = (l-1) + (j-1) * (M_ - 2);
+			k = (i-1) + (j-1) * (M_ - 2);
 
-			u(k) = exp(-( (x(l) - xc_) * (x(l) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) ) + 1.0i * px_ * (x(l) - xc_) + 1.0i * py_ * (y(j) - yc_));
+			u(k) = exp(-( (x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) ) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
 
 		}
 
 	}
 
-	if ( (roundf(real(probability(u)) * 100000000.0) / 100000000.0) != 1) {
 
-		u = u * sqrt( 1 / (real(probability(u))));
+	u = u * sqrt( 1 / (real(probability(u))));
 
-	}
 
 }
