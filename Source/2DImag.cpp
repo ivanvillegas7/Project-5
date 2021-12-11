@@ -17,13 +17,13 @@ int main() {
 
 	cx_mat V(my_system.M_ - 2, my_system.M_ - 2);
 
-	my_system.create_V(V, SP(10), SP(11), SP(12), SP(13));
+	my_system.create_V(V, 2, SP(10), SP(11), SP(12), SP(13));
 
 	my_system.create_AB(A, B, V);
 
 	cx_vec u(N);
 
-	my_system.initial_state(u);
+	my_system.initial_state(u, false, 0.08);
 
 
 
@@ -38,7 +38,7 @@ int main() {
 
 	int k;
 
-	while (t <= my_system.T_) {
+	while (t <= (my_system.T_ + my_system.dt_)) {
 
 		for (int i = 0; i < my_system.M_ - 2; i++) {
 
@@ -62,7 +62,7 @@ int main() {
 
 	}
 
-	u_n.save("Colourmap_im.txt", raw_ascii);
+	u_n.save("Colourmap_im.txt");
 
 	return 0;
 

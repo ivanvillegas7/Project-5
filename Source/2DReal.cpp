@@ -23,7 +23,7 @@ int main() {
 
 	cx_vec u(N);
 
-	my_system.initial_state(u);
+	my_system.initial_state(u, false, 0.08);
 
 
 
