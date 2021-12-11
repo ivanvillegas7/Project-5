@@ -54,7 +54,7 @@ public:
 
 	void evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec& u);
 
-	void initial_state(cx_vec& u);
+	void initial_state(cx_vec& u, bool one_dimensional, double fix_x);
 
 	cx_double probability(cx_vec u);
 
