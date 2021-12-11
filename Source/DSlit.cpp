@@ -214,8 +214,65 @@ cx_double DSlit::probability(cx_vec u){
 
 }
 
+cx_double DSlit::probability(cx_vec u){
+
+        cx_double p = 0.0;
+
+        //int k;
+
+        //for (int i = 0; i < M_ - 2; i++) {
+
+                for (int j = 0; j < (u.n_elem); j++) {
+
+                        //k = i + j * (M_ - 2);
+
+                        p += (conj(u(j)) * u(j));
+
+                }
+
+        //}
+
+        return(p);
+
+}
+void DSlit::initial_state(cx_vec& u, bool one-dimensional, double fix_x) {
+
+        vec y = linspace(0, 1, M_);
 
 
+        if (one-dimensional){
+
+                for (int j = 1; j < M_ - 1; j++) {
+
+                        u(j-1) = exp(-( (fix_x - xc_) * (fix_x - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) )>
+
+                }
+
+
+        }
+
+
+        else{
+
+                vec x = linspace(0, 1, M_);
+
+                int k;
+
+                for (int i = 1; i < M_ - 1; i++) {
+
+                        for (int j = 1; j < M_ - 1; j++) {
+
+                                k = (i-1) + (j-1) * (M_ - 2);
+u(k) = exp(-( (x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy>
+
+                        }
+
+                }
+
+        }
+
+
+        u = u * sqrt( 1 / (real(probability(u))));
 
 void DSlit::initial_state(cx_vec& u) {
 
