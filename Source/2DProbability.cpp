@@ -7,7 +7,7 @@ int main() {
 	SP.load("Simulation_parameters2.txt", raw_ascii);
 
 
-	DSlit my_system(SP(2), 1/SP(0) + 1.0, SP(9), SP(0), SP(1), SP(3), SP(4), SP(5), SP(6), SP(7), SP(8));
+	DSlit my_system(SP(2), 1/SP(0) + 1.0, SP(9), SP(0), SP(1), SP(6), SP(4), SP(5), SP(3), SP(7), SP(8));
 
 	int N = (my_system.M_ - 2) * (my_system.M_ - 2);
 
@@ -17,13 +17,13 @@ int main() {
 
 	cx_mat V(my_system.M_ - 2, my_system.M_ - 2);
 
-	my_system.create_V(V, SP(10), SP(11), SP(12), SP(13));
+	my_system.create_V(V, 2,  SP(10), SP(11), SP(12), SP(13));
 
 	my_system.create_AB(A, B, V);
 
 	cx_vec u(N);
 
-	my_system.initial_state(u);
+	my_system.initial_state(u, false, 0.08);
 
 
 
@@ -34,11 +34,13 @@ int main() {
 	cx_mat U(my_system.M_ - 2, my_system.M_ - 2);
 
 
+	//cout << "T_dimenssion=" << (my_system.T_ / my_system.dt_) + 1 << endl;
+
 	int l = 0;
 
 	int k;
 
-	while (t <= my_system.T_) {
+	while (t <= (my_system.T_ + my_system.dt_)) {
 
 		for (int i = 0; i < my_system.M_ - 2; i++) {
 
@@ -62,7 +64,7 @@ int main() {
 
 	}
 
-	u_n.save("Colourmap_p.txt", raw_ascii);
+	u_n.save("Colourmap_p.txt");
 
 	return 0;
 

@@ -194,28 +194,6 @@ void DSlit::evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec & u) {
 
 cx_double DSlit::probability(cx_vec u){
 
-	cx_double p = 0.0;
-
-	int k;
-
-	for (int i = 0; i < M_ - 2; i++) {
-
-		for (int j = 0; j < M_ - 2; j++) {
-
-			k = i + j * (M_ - 2);
-
-			p += (conj(u(k)) * u(k));
-
-		}
-
-	}
-
-	return(p);
-
-}
-
-cx_double DSlit::probability(cx_vec u){
-
         cx_double p = 0.0;
 
         //int k;
@@ -235,16 +213,20 @@ cx_double DSlit::probability(cx_vec u){
         return(p);
 
 }
-void DSlit::initial_state(cx_vec& u, bool one-dimensional, double fix_x) {
+
+
+
+
+void DSlit::initial_state(cx_vec& u, bool one_dimensional, double fix_x) {
 
         vec y = linspace(0, 1, M_);
 
 
-        if (one-dimensional){
+        if (one_dimensional){
 
                 for (int j = 1; j < M_ - 1; j++) {
 
-                        u(j-1) = exp(-( (fix_x - xc_) * (fix_x - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) )>
+                        u(j-1) = exp(-( (fix_x - xc_) * (fix_x - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) ) + 1.0i * px_ * (fix_x - xc_) + 1.0i * py_ * (y(j) - yc_));
 
                 }
 
@@ -263,7 +245,8 @@ void DSlit::initial_state(cx_vec& u, bool one-dimensional, double fix_x) {
                         for (int j = 1; j < M_ - 1; j++) {
 
                                 k = (i-1) + (j-1) * (M_ - 2);
-u(k) = exp(-( (x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy>
+
+				u(k) = exp(-( (x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_ )) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
 
                         }
 
@@ -273,28 +256,4 @@ u(k) = exp(-( (x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) *
 
 
         u = u * sqrt( 1 / (real(probability(u))));
-
-void DSlit::initial_state(cx_vec& u) {
-
-	vec x = linspace(0, 1, M_);
-	vec y = linspace(0, 1, M_);
-
-	int k;
-
-	for (int i = 1; i < M_ - 1; i++) {
-
-		for (int j = 1; j < M_ - 1; j++) {
-
-			k = (i-1) + (j-1) * (M_ - 2);
-
-			u(k) = exp(-( (x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) ) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
-
-		}
-
-	}
-
-
-	u = u * sqrt( 1 / (real(probability(u))));
-
-
 }
