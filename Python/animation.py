@@ -96,7 +96,7 @@ anim = FuncAnimation(fig, animation, interval=1, frames=np.arange(0, 81, 2), rep
 #plt.show()
 
 # # Save the animation
-anim.save('Re_animation.gif', writer="ffmpeg", bitrate=-1, fps=30)
+anim.save('Re_animation.mp4', writer="ffmpeg", bitrate=-1, fps=30)
 
 
 
@@ -159,7 +159,7 @@ anim = FuncAnimation(fig, animation, interval=1, frames=np.arange(0, 81, 2), rep
 #plt.show()
 
 # # Save the animation
-anim.save('Im_animation.gif', writer="ffmpeg", bitrate=-1, fps=30)
+anim.save('Im_animation.mp4', writer="ffmpeg", bitrate=-1, fps=30)
 
 
 
@@ -222,4 +222,4 @@ anim = FuncAnimation(fig, animation, interval=1, frames=np.arange(0, 81, 2), rep
 #plt.show()
 
 # # Save the animation
-anim.save('p_animation.gif', writer="ffmpeg", bitrate=-1, fps=30)
+anim.save('p_animation.mp4', writer="ffmpeg", bitrate=-1, fps=30)
