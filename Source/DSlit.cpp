@@ -6,7 +6,7 @@ DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, double dt_in, dou
 	//We assign the introduced values to the member variables
 
 	T_ = T_in;
-	M_ = M_in;
+	M_ = (int)round(M_in);
 	v0_ = v0_in;
 	h_ = h_in;
 	dt_ = dt_in;
@@ -49,13 +49,20 @@ void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos
 
 			}
 
+			for (int i = (YHALF + (int)round(A/2)); i < M_ - 2; i++){
+
+                        	        V(i,j) = v0_;
+
+                        }
+
+
         	}
 
 
 
 	        if (n == 2){
 
-			for (int i = 0; i < (YHALF - (S + A)); i++) {
+			for (int i = 0; i <= (YHALF - (S + A)); i++) {
 
                                 V(i, j) = v0_;
 
@@ -79,7 +86,7 @@ void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos
 
 		if (n == 3){
 
-			for (int i = 0; i < (YHALF - (S + A + (int)round(A/2))); i++) {
+			for (int i = 0; i <= (YHALF - (S + A + (int)round(A/2))); i++) {
 
                                 V(i, j) = v0_;
 
