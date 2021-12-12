@@ -253,7 +253,7 @@ void DSlit::initial_state(cx_vec& u, bool one_dimensional, double fix_x) {
 
                                 k = (i-1) + (j-1) * (M_ - 2);
 
-				u(k) = exp(-( (x(i) - xc_) * (x(i) - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_ )) + 1.0i * px_ * (x(i) - xc_) + 1.0i * py_ * (y(j) - yc_));
+				u(k) = exp(-( (x(j) - xc_) * (x(j) - xc_) / (2 * sx_ * sx_) ) - ( (y(i) - yc_) * (y(i) - yc_) / (2 * sy_ * sy_ )) + 1.0i * px_ * (x(j) - xc_) + 1.0i * py_ * (y(i) - yc_));
 
                         }
 

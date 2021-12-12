@@ -7,7 +7,7 @@ int main() {
 	SP.load("Simulation_parameters2.txt", raw_ascii);
 
 
-	DSlit my_system(SP(2), 1/SP(0) + 1.0, SP(9), SP(0), SP(1), SP(6), SP(4), SP(5), SP(3), SP(7), SP(8));
+	DSlit my_system(SP(2), 1/SP(0) + 1.0, SP(9), SP(0), SP(1), SP(3), SP(4), SP(5), SP(6), SP(7), SP(8));
 
 	int N = (my_system.M_ - 2) * (my_system.M_ - 2);
 
@@ -33,6 +33,8 @@ int main() {
 
 	cx_mat U(my_system.M_ - 2, my_system.M_ - 2);
 
+	//cx_mat U_conj(my_system.M_ - 2, my_system.M_ - 2);
+
 
 	//cout << "T_dimenssion=" << (my_system.T_ / my_system.dt_) + 1 << endl;
 
@@ -49,6 +51,8 @@ int main() {
 				k = i + j * (my_system.M_ - 2);
 
 				U(i, j) = u(k);
+
+				//U_conj(i, j) = conj(u(k));
 
 
 			}
