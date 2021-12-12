@@ -2,7 +2,7 @@ from typing import List
 import matplotlib.pyplot as plt
 import numpy as np
 
-#The data get extracted from different .txt files, in this case, the values of temperature, ϵ, |m|, C_v and χ for the different temperatures and for different lattice sizes.
+#The data get extracted from different .txt files, in this case, the values of the deviation of the total probability for the cases with and without a double-slit barrier
 
 with  open("Consistency_check0.txt", "r") as  infile:
 
