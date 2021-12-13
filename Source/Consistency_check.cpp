@@ -5,12 +5,6 @@
 
 int main(){
 
-	ofstream ofile;
-	ofile.open("Consistency_check.txt");  //That is an example name, but with this program we have generated four different files
-	ofile << scientific;
-
-
-
 	//First, we extract the needed parameters from an input file
 
 	vec SP;
@@ -58,17 +52,15 @@ int main(){
 
 	double t = 0.0;
 
-	int n = 1;
+	vec P(1);
 
-	/*cx_vec P(1);
+	P(0) = abs(1.0 - real(my_system.probability(u)));
 
-	P(0) = my_system.probability(u);
+	vec p(1);
 
-	cx_vec p(1);
+	//P.print("Probability:");
 
-	P.print("Probability:");*/
-
-	ofile << (1.0 - real(my_system.probability(u))) << endl;
+	//ofile << ( abs( 1.0 - real(my_system.probability(u)) ) ) << endl;
 
 
 
@@ -78,23 +70,21 @@ int main(){
 
 		my_system.evolve_u(A, B, u);
 
-		ofile << (1.0 - real(my_system.probability(u))) << endl;
+		//ofile << ( abs( 1.0 - real(my_system.probability(u)) ) ) << endl;
 
-	    	/*p(0) = my_system.probability(u);
-    		P.insert_rows(P.n_rows, p.row(0));*/
+	    	p(0) = abs( 1.0 - real(my_system.probability(u)) );
+    		P.insert_rows(P.n_rows, p.row(0));
 
 		t = t + my_system.dt_;
-
-		n++;
 
 	}
 
 
-	/*P.print("Probability:");
+	//P.print("Probability:");
 
-	P.save("Consistency_check.txt");*/
+	P.save("Consistency_check0.txt", raw_ascii);
 
-	ofile.close();
+	//ofile.close();
 
 	return 0;
 
