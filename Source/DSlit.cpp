@@ -46,7 +46,7 @@ void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos
 
 
 
-	//Now we start to put potential where it should be
+	//Now we start replacing the zeros by the potential value where the wall is
 
 	for (int j = (int)round(XPOS - W); j <= (int)round(XPOS + W); j++) {
 
@@ -135,24 +135,28 @@ void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos
 
 
 
+//Method that creates the matrices A and B used for solving the equation that will evolve the state of the particle in time
 
 void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
-	int N = (M_ - 2) * (M_ - 2);
+	int N = (M_ - 2) * (M_ - 2);  //Dimension of the matrices
 
 	int k;
 
 	cx_double r = 1.0 * 1.0i * dt_ / (2 * h_ * h_);
 
 	cx_vec veca(N);
-
+				//Diagonals of the matrix
 	cx_vec vecb(N);
+
+
+	//With these two for loops we fill the diagonals
 
 	for (int i = 0; i < M_ - 2; i++) {
 
 		for (int j = 0; j < M_ - 2; j++) {
 
-			k = i + j * (M_ - 2);
+			k = i + j * (M_ - 2);  //Here we calculate the position k of the a and b vectors that corresponds to the element ij of the matrix V
 
 			veca(k) = 1.0 + 4.0 * r + 1.0i * dt_ * V(i, j) * 0.5;
 
@@ -162,11 +166,17 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
 	}
 
+
+	//We create two vectors of different lengths filled with the value of r
+
 	cx_vec vecr(N - 1);
 	vecr.fill(r);
 
 	cx_vec vecr2(N - M_ + 2);
 	vecr2.fill(r);
+
+
+	//We fill some diagonals of each matrix
 
 	A.diag(0) = veca;
 	A.diag(1) = -vecr;
@@ -180,6 +190,8 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 	B.diag(M_ - 2) = vecr2;
 	B.diag(-(M_ - 2)) = vecr2;
 
+
+	//Finally we write a zero in the elements of those matrices that are cero
 
 	for (int i = 0; i < N; i++) {
 
@@ -203,6 +215,8 @@ void DSlit::create_AB(sp_cx_mat& A, sp_cx_mat& B, cx_mat V) {
 
 
 
+//Method that evolves the state in time
+
 void DSlit::evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec & u) {
 
 		cx_vec b = B * u;
@@ -213,6 +227,8 @@ void DSlit::evolve_u(sp_cx_mat A, sp_cx_mat B, cx_vec & u) {
 
 
 
+
+//Method that calculates the total probability
 
 cx_double DSlit::probability(cx_vec u){
 
@@ -231,7 +247,11 @@ cx_double DSlit::probability(cx_vec u){
 
 
 
+//Method that calculates the initial state
+
 void DSlit::initial_state(cx_vec& u) {
+
+	//Vectors for the x and y positions
 
         vec y = linspace(0, 1, M_);
 
@@ -243,13 +263,16 @@ void DSlit::initial_state(cx_vec& u) {
 
         	for (int j = 1; j < M_ - 1; j++) {
 
-                	k = (i-1) + (j-1) * (M_ - 2);
+                	k = (i-1) + (j-1) * (M_ - 2);  //Here we calculate the position k in the vector u that corresponds to the position ij in the matrix U
 
 			u(k) = exp(-( (x(j) - xc_) * (x(j) - xc_) / (2 * sx_ * sx_) ) - ( (y(i) - yc_) * (y(i) - yc_) / (2 * sy_ * sy_ )) + 1.0i * px_ * (x(j) - xc_) + 1.0i * py_ * (y(i) - yc_));
 
                 }
 
         }
+
+
+	//With the following line, we normalize the state
 
         u = u * sqrt( 1 / (real(probability(u))));
 
