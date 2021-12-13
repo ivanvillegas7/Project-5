@@ -68,7 +68,7 @@ int main() {
 
 		}
 
-		u_n.slice(l) = real( conj(U) % U );  //We store the time step before evolving the system because we want to store also the initial state
+		u_n.slice(l) = real( conj(U) % U );  //We store the 2D probability of each time step before evolving the system because we want to store also the initial state
 
 		my_system.evolve_u(A, B, u);  //Then we evolve the system
 
