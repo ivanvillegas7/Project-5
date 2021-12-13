@@ -31,28 +31,36 @@ void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos
 
 	V.zeros(M_ - 2, M_ - 2);
 
-	int W = (int)round((M_ - 3) * w / 2);
 
-	int S = (int)round((M_ - 3) * s / 2);
+	//Now we transform the given distances in "numbers of coloums" (we will round them later so they are integers)
 
-	int A = (int)round((M_ - 3) * a);
+	double W = (M_ - 3) * w / 2;  //Width of the wall
 
-	int XPOS = (int)round((M_ - 3) * xpos);
+	double S = (M_ - 3) * s / 2;  //Separation between slits
 
-	int YHALF = (int)round((M_ - 3) * 0.5);
+	double A = (M_ - 3) * a / 2;  //Slit aperture
+
+	double XPOS = (M_ - 3) * xpos;  //Position of the wall
+
+	double YHALF = (M_ - 3) * 0.5;  //Position of the half of the matrix
 
 
-	for (int j = (XPOS - W); j <= (XPOS + W); j++) {
+
+	//Now we start to put potential where it should be
+
+	for (int j = (int)round(XPOS - W); j <= (int)round(XPOS + W); j++) {
+
+		//First the case for one slit
 
 		if (n == 1){
 
-			for (int i = 0; i <= (YHALF - (int)round(A/2)); i++){
+			for (int i = 0; i < (int)round(YHALF - A); i++){
 
 				V(i,j) = v0_;
 
 			}
 
-			for (int i = (YHALF + (int)round(A/2)); i < M_ - 2; i++){
+			for (int i = ( (int)round(YHALF + A) + 1 ); i < M_ - 2; i++){
 
                         	        V(i,j) = v0_;
 
@@ -62,22 +70,24 @@ void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos
         	}
 
 
+		//Now we'll write the two slits case
 
 	        if (n == 2){
 
-			for (int i = 0; i <= (YHALF - (S + A)); i++) {
+			for (int i = 0; i < (int)round(YHALF - (S + 2*A)); i++) {
 
                                 V(i, j) = v0_;
 
                         }
 
-                        for (int i = (YHALF - S); i <= (YHALF + S); i++) {
+                        for (int i = (int)round(YHALF - S); i <= (int)round(YHALF + S); i++) {
+
 
                                 V(i, j) = v0_;
 
                         }
 
-                        for (int i = (YHALF + (S + A)); i < (M_ - 2); i++) {
+                        for (int i = ( (int)round(YHALF + (S + 2*A)) + 1 ); i < (M_ - 2); i++) {
 
                                 V(i, j) = v0_;
 
@@ -87,28 +97,30 @@ void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos
 		}
 
 
+		//Finally, we write the 3-slits case
+
 		if (n == 3){
 
-			for (int i = 0; i <= (YHALF - (S + A + (int)round(A/2))); i++) {
+			for (int i = 0; i < (int)round(YHALF - (2*S + 3*A)); i++) {
 
                                 V(i, j) = v0_;
 
                         }
 
-                        for (int i = (YHALF - (S + (int)round(A/2))); i <= (YHALF - (int)round(A/2)); i++) {
+                        for (int i = (int)round(YHALF - (2*S + A)); i < (int)round(YHALF - A); i++) {
 
                                 V(i, j) = v0_;
 
                         }
 
-                        for (int i = (YHALF + (int)round(A/2)); i <= (YHALF + ( S + (int)round(A/2))); i++) {
+                        for (int i = ( (int)round(YHALF + A) + 1 ); i <= (int)round(YHALF + (2*S + A)); i++) {
 
                                 V(i, j) = v0_;
 
                         }
 
 
-                        for (int i = (YHALF + (S + A + (int)round(A/2))); i < (M_ - 2); i++) {
+                        for (int i = ( (int)round(YHALF + (2*S + 3*A)) + 1 ); i < (M_ - 2); i++) {
 
                                 V(i, j) = v0_;
 
