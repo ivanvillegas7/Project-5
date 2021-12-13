@@ -46,7 +46,7 @@ public:
 
 
 
-	//Finally, we declare some methods for calculating some important things
+	//Finally, we declare some useful functions
 
 	void create_V(cx_mat& V, int n, double w, double s, double a, double xpos);
 
