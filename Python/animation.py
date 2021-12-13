@@ -31,7 +31,7 @@ ax = plt.gca()
 #We take the 0 slice of the cube
 Re0 = Re[ pa.single_slice , 0 ]
 
-# Create a colour scale normalization according to the max Re value in the first frame
+# Create a colour scale normalization according to the max Re0 value in the first frame
 norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=Re0.max())
 
 # Plot the first frame
@@ -139,7 +139,7 @@ ax = plt.gca()
 #We take the 0 slice of the cube
 p0 = p[ pa.single_slice , 0 ]
 
-# Create a colour scale normalization according to the max p value in the first frame
+# Create a colour scale normalization according to the max p0 value in the first frame
 norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p0.max() )
 
 # Plot the first frame
