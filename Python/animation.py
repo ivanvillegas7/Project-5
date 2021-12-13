@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import pyarma as pa
 
-# Real part 
+# We create a cube, and fill it with a txt that contains the data of the real part
 Re = pa.cube()
 Re.load("Colourmap_re.txt")
 
@@ -72,8 +72,7 @@ anim = FuncAnimation(fig, animation, interval=1, frames=np.arange(0, 81, 2), rep
 # Save the animation
 anim.save('Re_animation.mp4', writer="ffmpeg", bitrate=-1, fps=30)
 
-
-# Imaginary part
+# We create a cube, and fill it with a txt that contains the data of the imaginary part
 Im = pa.cube()
 
 Im.load("Colourmap_im.txt" )
@@ -128,7 +127,7 @@ anim = FuncAnimation(fig, animation, interval=1, frames=np.arange(0, 81, 2), rep
 anim.save('Im_animation.mp4', writer="ffmpeg", bitrate=-1, fps=30)
 
 
-#Probability
+# We create a cube, and fill it with a txt that contains the data of the 2D probability function
 p = pa.cube()
 
 p.load("Colourmap_p.txt" )
