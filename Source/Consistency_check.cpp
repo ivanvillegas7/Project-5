@@ -25,7 +25,7 @@ int main(){
 
         cx_mat V(my_system.M_ - 2, my_system.M_ - 2);
 
-        my_system.create_V(V , SP(10), SP(11), SP(12), SP(13));
+        my_system.create_V(V, 2, SP(10), SP(11), SP(12), SP(13));
 
         my_system.create_AB(A, B , V);
 
