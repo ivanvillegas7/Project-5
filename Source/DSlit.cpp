@@ -1,12 +1,13 @@
 #include "DSlit.hpp"
 
+//Here we define the class "DSlit"
 
 DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, double dt_in, double xc_in, double sx_in, double px_in, double yc_in, double sy_in, double py_in) {
 
 	//We assign the introduced values to the member variables
 
 	T_ = T_in;
-	M_ = (int)round(M_in);
+	M_ = (int)round(M_in);  //In here we just round the imput value for the given M_ and set that rounded value as an integer just in case it was not
 	v0_ = v0_in;
 	h_ = h_in;
 	dt_ = dt_in;
@@ -22,9 +23,11 @@ DSlit::DSlit(double T_in, int M_in, double v0_in, double h_in, double dt_in, dou
 
 
 
-//Method that creates a the potential in a matrix form
+//Method that creates a the potential in a matrix form for n slits, where n can take the values 1, 2 or 3
 
 void DSlit::create_V(cx_mat& V, int n, double w, double s, double a, double xpos) {
+
+	//First we create a matrix full of zeros
 
 	V.zeros(M_ - 2, M_ - 2);
 
@@ -203,19 +206,11 @@ cx_double DSlit::probability(cx_vec u){
 
         cx_double p = 0.0;
 
-        //int k;
+        for (int j = 0; j < (u.n_elem); j++) {
 
-        //for (int i = 0; i < M_ - 2; i++) {
+        	p += (conj(u(j)) * u(j));
 
-                for (int j = 0; j < (u.n_elem); j++) {
-
-                        //k = i + j * (M_ - 2);
-
-                        p += (conj(u(j)) * u(j));
-
-                }
-
-        //}
+        }
 
         return(p);
 
@@ -224,43 +219,26 @@ cx_double DSlit::probability(cx_vec u){
 
 
 
-void DSlit::initial_state(cx_vec& u, bool one_dimensional, double fix_x) {
+void DSlit::initial_state(cx_vec& u) {
 
         vec y = linspace(0, 1, M_);
 
+        vec x = linspace(0, 1, M_);
 
-        if (one_dimensional){
+        int k;
 
-                for (int j = 1; j < M_ - 1; j++) {
+        for (int i = 1; i < M_ - 1; i++) {
 
-                        u(j-1) = exp(-( (fix_x - xc_) * (fix_x - xc_) / (2 * sx_ * sx_) ) - ( (y(j) - yc_) * (y(j) - yc_) / (2 * sy_ * sy_) ) + 1.0i * px_ * (fix_x - xc_) + 1.0i * py_ * (y(j) - yc_));
+        	for (int j = 1; j < M_ - 1; j++) {
 
-                }
+                	k = (i-1) + (j-1) * (M_ - 2);
 
-
-        }
-
-
-        else{
-
-                vec x = linspace(0, 1, M_);
-
-                int k;
-
-                for (int i = 1; i < M_ - 1; i++) {
-
-                        for (int j = 1; j < M_ - 1; j++) {
-
-                                k = (i-1) + (j-1) * (M_ - 2);
-
-				u(k) = exp(-( (x(j) - xc_) * (x(j) - xc_) / (2 * sx_ * sx_) ) - ( (y(i) - yc_) * (y(i) - yc_) / (2 * sy_ * sy_ )) + 1.0i * px_ * (x(j) - xc_) + 1.0i * py_ * (y(i) - yc_));
-
-                        }
+			u(k) = exp(-( (x(j) - xc_) * (x(j) - xc_) / (2 * sx_ * sx_) ) - ( (y(i) - yc_) * (y(i) - yc_) / (2 * sy_ * sy_ )) + 1.0i * px_ * (x(j) - xc_) + 1.0i * py_ * (y(i) - yc_));
 
                 }
 
         }
-
 
         u = u * sqrt( 1 / (real(probability(u))));
+
 }

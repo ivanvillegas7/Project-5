@@ -23,7 +23,7 @@ int main() {
 
 	cx_vec u(N);
 
-	my_system.initial_state(u, false, 0.08);
+	my_system.initial_state(u);
 
 
 
@@ -32,11 +32,6 @@ int main() {
 	cube u_n(my_system.M_ - 2, my_system.M_ - 2, (int)round( (my_system.T_ / my_system.dt_) + 1 ));
 
 	cx_mat U(my_system.M_ - 2, my_system.M_ - 2);
-
-	//cx_mat U_conj(my_system.M_ - 2, my_system.M_ - 2);
-
-
-	//cout << "T_dimenssion=" << (my_system.T_ / my_system.dt_) + 1 << endl;
 
 	int l = 0;
 
@@ -51,9 +46,6 @@ int main() {
 				k = i + j * (my_system.M_ - 2);
 
 				U(i, j) = u(k);
-
-				//U_conj(i, j) = conj(u(k));
-
 
 			}
 
