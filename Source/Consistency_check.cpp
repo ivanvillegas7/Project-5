@@ -27,15 +27,7 @@ int main(){
 
         my_system.create_V(V , SP(10), SP(11), SP(12), SP(13));
 
-	cout << "V done" << endl;
-
         my_system.create_AB(A, B , V);
-
-	cout << "A and B done" << endl;
-
-
-
-
 
 	//Then, we set up the initial state
 
@@ -43,12 +35,7 @@ int main(){
 
 	my_system.initial_state(u);
 
-	cout << size(B) << "  " << size (u);
-
-
-
-	//We define some elements to store and to count the steps
-
+	//We define some elements to store the deviation of the total probability from 1.0
 
 	double t = 0.0;
 
@@ -58,20 +45,11 @@ int main(){
 
 	vec p(1);
 
-	//P.print("Probability:");
-
-	//ofile << ( abs( 1.0 - real(my_system.probability(u)) ) ) << endl;
-
-
-
-	//Finally, we can evolve the system in one step in time
+	//Finally, we can evolve the system and store the deviation of the total probability from 1.0
 
 	while(t < my_system.T_){
 
 		my_system.evolve_u(A, B, u);
-
-		//ofile << ( abs( 1.0 - real(my_system.probability(u)) ) ) << endl;
-
 	    	p(0) = abs( 1.0 - real(my_system.probability(u)) );
     		P.insert_rows(P.n_rows, p.row(0));
 
@@ -79,12 +57,7 @@ int main(){
 
 	}
 
-
-	//P.print("Probability:");
-
 	P.save("Consistency_check0.txt", raw_ascii);
-
-	//ofile.close();
 
 	return 0;
 
