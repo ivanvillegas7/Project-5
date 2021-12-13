@@ -28,6 +28,7 @@ y_min, y_max = y_points[0], y_points[-1]
 fig = plt.figure()
 ax = plt.gca()
 
+#We take the 0 slice of the cube
 Re0 = Re[ pa.single_slice , 0 ]
 
 # Create a colour scale normalization according to the max Re value in the first frame
@@ -81,8 +82,8 @@ Im.load("Colourmap_im.txt" )
 fig = plt.figure()
 ax = plt.gca()
 
+#We take the 0 slice of the cube
 Im0 = Im[ pa.single_slice , 0 ]
-
 
 # Create a colour scale normalization according to the max Im value in the first frame
 norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=Im0.max())
@@ -129,15 +130,14 @@ anim.save('Im_animation.mp4', writer="ffmpeg", bitrate=-1, fps=30)
 
 # We create a cube, and fill it with a txt that contains the data of the 2D probability function
 p = pa.cube()
-
 p.load("Colourmap_p.txt" )
 
 # Create figure
 fig = plt.figure()
 ax = plt.gca()
 
+#We take the 0 slice of the cube
 p0 = p[ pa.single_slice , 0 ]
-
 
 # Create a colour scale normalization according to the max p value in the first frame
 norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p0.max() )
@@ -155,7 +155,6 @@ plt.yticks(fontsize=fontsize)
 cbar = fig.colorbar(img, ax=ax)
 cbar.set_label("p", fontsize=fontsize)
 cbar.ax.tick_params(labelsize=fontsize)
-
 
 # Add a text element showing the time
 time_txt = plt.text(0.95, 0.95, "t = {:.3e}".format(t_min), color="white", 
