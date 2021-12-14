@@ -8,9 +8,9 @@ Now we are going to detail a little bit each .cpp file.
 
 First, we have the file "DSlit.cpp" which define the main classe that we will use later. This class store all the main parameters and contain the main functions that are used to evolve the system and obtain the data we need for making the plots. This file is nor meant to be directly executed.
 
-In the file "Consistency_check.cpp" we evolve the system in a two slits configuration. With them, we generate the .txt files stored in the folder One particle (in Python/txt files), changing the step-size in the ones used to study the relative error. With this .txt we generate the plots "x vs y RK" and "z vs t RK" (using the file "One particle RK4.py"); "x vs y FE" and "z vs t FE" (using the file "One particle FE.py"); "absolute_error"(using "absolute_error.py"), and "relative_error" (using "relative_error.py").
+In the file "Consistency_check.cpp" we evolve the system in a two slits configuration. With it, we generate the .txt files stored in the folder "Consistency check" (in Python/txt files). What changes between the two .txt files is the introduced parameters values. With this .txt we generate the plot "Consistency_check".
 
-In the files "Resonance_1" and "Resonance_2" we study the case of 100 particles trapped in our device. With them we produce the plots "Resonance_1" and "Resonance_2", using the python codes "Resonance_1.py" and "Resonance_2.py" (respectively) and the .txt files stored in the folder Resonance (in Python/txt files).
+In the files "2DReal.cpp" and "2DImag.cpp" we study the case of 100 particles trapped in our device. With them we produce the plots "Resonance_1" and "Resonance_2", using the python codes "Resonance_1.py" and "Resonance_2.py" (respectively) and the .txt files stored in the folder Resonance (in Python/txt files).
 
 And, finally using the file "Two_particles_RK4.cpp" we simulate the case of having two particles in our trap. Changing different desired parameters we generate different .txt files store in the folder Two particles (in Python/txt files) and with them, we produce the rest of the plots of the folder Plots (in Python) using the rest of the pyhton files.
 
