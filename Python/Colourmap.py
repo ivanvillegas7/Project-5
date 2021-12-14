@@ -3,9 +3,6 @@ import matplotlib
 import numpy as np
 import pyarma as pa
 
-M = 1/h + 1
-
-P = 0.002/0.000025 + 1
 
 # We create a cube, and fill it with a txt that contains the data of the real part
 Re = pa.cube()
@@ -226,8 +223,10 @@ plt.savefig("Colourmap_Im_t2.pdf")
 
 
 # We create a cube, and fill it with a txt that contains the data of the 2D probability function
+
+# Single slit
 p = pa.cube()
-p.load("Colourmap_p.txt" )
+p.load("Colourmap_p_1slit.txt" )
 
 # Create figure
 fig = plt.figure()
@@ -236,10 +235,6 @@ ax = plt.gca()
 
 #We take the 0 slice of the cube
 p0 = p[ pa.single_slice , 0 ]
-
-p0.brief_print()
-
-p0.max()
 
 # Create a colour scale normalization according to the max z value in the first frame
 norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p0.max() )
@@ -263,7 +258,7 @@ time_txt = plt.text(0.95, 0.95, "t = 0.000", color="white",
                     horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
 
 #We save the figure in a PDF
-plt.savefig("Colourmap_p_t0.pdf")
+plt.savefig("Colourmap_p_1slit_t0.pdf")
 
 # Create figure
 fig = plt.figure()
@@ -273,9 +268,6 @@ ax = plt.gca()
 #We take the 40 slice of the cube
 p1 = p[ pa.single_slice , 40 ]
 
-p1.brief_print()
-
-p1.max()
 
 # Create a colour scale normalization according to the max p1 value in the first frame
 norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p1.max() )
@@ -298,7 +290,7 @@ cbar.ax.tick_params(labelsize=fontsize)
 time_txt = plt.text(0.95, 0.95, "t = 0.001", color="white", 
                     horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
 
-plt.savefig("Colourmap_p_t1.pdf")
+plt.savefig("Colourmap_p_1slit_t1.pdf")
 
 # Create figure
 fig = plt.figure()
@@ -330,6 +322,206 @@ time_txt = plt.text(0.95, 0.95, "t = 0.002", color="white",
                     horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
 
 #We save the figure in a PDF
-plt.savefig("Colourmap_p_t2.pdf")
+plt.savefig("Colourmap_p_1slit_t2.pdf")
 
+# Double slit
+p = pa.cube()
+p.load("Colourmap_p_2slits.txt" )
+
+# Create figure
+fig = plt.figure()
+ax = plt.gca()
+
+
+#We take the 0 slice of the cube
+p0 = p[ pa.single_slice , 0 ]
+
+# Create a colour scale normalization according to the max z value in the first frame
+norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p0.max() )
+
+# Plot the first frame
+img = ax.imshow( p0, extent=[x_min,x_max,y_min,y_max], cmap=plt.get_cmap("viridis"), norm=norm)
+
+# Axis labels
+plt.xlabel("x", fontsize=fontsize)
+plt.ylabel("y", fontsize=fontsize)
+plt.xticks(fontsize=fontsize)
+plt.yticks(fontsize=fontsize)
+
+# Add a colourbar
+cbar = fig.colorbar(img, ax=ax)
+cbar.set_label("p", fontsize=fontsize)
+cbar.ax.tick_params(labelsize=fontsize)
+
+# Add a text element showing the time
+time_txt = plt.text(0.95, 0.95, "t = 0.000", color="white", 
+                    horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
+
+#We save the figure in a PDF
+plt.savefig("Colourmap_p_2slits_t0.pdf")
+
+# Create figure
+fig = plt.figure()
+ax = plt.gca()
+
+
+#We take the 40 slice of the cube
+p1 = p[ pa.single_slice , 40 ]
+
+
+# Create a colour scale normalization according to the max p1 value in the first frame
+norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p1.max() )
+
+# Plot the first frame
+img = ax.imshow( p1, extent=[x_min,x_max,y_min,y_max], cmap=plt.get_cmap("viridis"), norm=norm)
+
+# Axis labels
+plt.xlabel("x", fontsize=fontsize)
+plt.ylabel("y", fontsize=fontsize)
+plt.xticks(fontsize=fontsize)
+plt.yticks(fontsize=fontsize)
+
+# Add a colourbar
+cbar = fig.colorbar(img, ax=ax)
+cbar.set_label("p", fontsize=fontsize)
+cbar.ax.tick_params(labelsize=fontsize)
+
+# Add a text element showing the time
+time_txt = plt.text(0.95, 0.95, "t = 0.001", color="white", 
+                    horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
+
+plt.savefig("Colourmap_p_2slits_t1.pdf")
+
+# Create figure
+fig = plt.figure()
+ax = plt.gca()
+
+
+#We take the 80 slice of the cube
+p2 = p[ pa.single_slice , 80 ]
+
+# Create a colour scale normalization according to the max p2 value in the first frame
+norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p2.max() )
+
+# Plot the first frame
+img = ax.imshow( p2, extent=[x_min,x_max,y_min,y_max], cmap=plt.get_cmap("viridis"), norm=norm)
+
+# Axis labels
+plt.xlabel("x", fontsize=fontsize)
+plt.ylabel("y", fontsize=fontsize)
+plt.xticks(fontsize=fontsize)
+plt.yticks(fontsize=fontsize)
+
+# Add a colourbar
+cbar = fig.colorbar(img, ax=ax)
+cbar.set_label("p", fontsize=fontsize)
+cbar.ax.tick_params(labelsize=fontsize)
+
+# Add a text element showing the time
+time_txt = plt.text(0.95, 0.95, "t = 0.002", color="white", 
+                    horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
+
+#We save the figure in a PDF
+plt.savefig("Colourmap_p_2slits_t2.pdf")
+
+
+# Triple slit
+p = pa.cube()
+p.load("Colourmap_p_3slits.txt" )
+
+# Create figure
+fig = plt.figure()
+ax = plt.gca()
+
+
+#We take the 0 slice of the cube
+p0 = p[ pa.single_slice , 0 ]
+
+# Create a colour scale normalization according to the max z value in the first frame
+norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p0.max() )
+
+# Plot the first frame
+img = ax.imshow( p0, extent=[x_min,x_max,y_min,y_max], cmap=plt.get_cmap("viridis"), norm=norm)
+
+# Axis labels
+plt.xlabel("x", fontsize=fontsize)
+plt.ylabel("y", fontsize=fontsize)
+plt.xticks(fontsize=fontsize)
+plt.yticks(fontsize=fontsize)
+
+# Add a colourbar
+cbar = fig.colorbar(img, ax=ax)
+cbar.set_label("p", fontsize=fontsize)
+cbar.ax.tick_params(labelsize=fontsize)
+
+# Add a text element showing the time
+time_txt = plt.text(0.95, 0.95, "t = 0.000", color="white", 
+                    horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
+
+#We save the figure in a PDF
+plt.savefig("Colourmap_p_3slits_t0.pdf")
+
+# Create figure
+fig = plt.figure()
+ax = plt.gca()
+
+
+#We take the 40 slice of the cube
+p1 = p[ pa.single_slice , 40 ]
+
+
+# Create a colour scale normalization according to the max p1 value in the first frame
+norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p1.max() )
+
+# Plot the first frame
+img = ax.imshow( p1, extent=[x_min,x_max,y_min,y_max], cmap=plt.get_cmap("viridis"), norm=norm)
+
+# Axis labels
+plt.xlabel("x", fontsize=fontsize)
+plt.ylabel("y", fontsize=fontsize)
+plt.xticks(fontsize=fontsize)
+plt.yticks(fontsize=fontsize)
+
+# Add a colourbar
+cbar = fig.colorbar(img, ax=ax)
+cbar.set_label("p", fontsize=fontsize)
+cbar.ax.tick_params(labelsize=fontsize)
+
+# Add a text element showing the time
+time_txt = plt.text(0.95, 0.95, "t = 0.001", color="white", 
+                    horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
+
+plt.savefig("Colourmap_p_3slits_t1.pdf")
+
+# Create figure
+fig = plt.figure()
+ax = plt.gca()
+
+
+#We take the 80 slice of the cube
+p2 = p[ pa.single_slice , 80 ]
+
+# Create a colour scale normalization according to the max p2 value in the first frame
+norm = matplotlib.cm.colors.Normalize(vmin=0.0, vmax=p2.max() )
+
+# Plot the first frame
+img = ax.imshow( p2, extent=[x_min,x_max,y_min,y_max], cmap=plt.get_cmap("viridis"), norm=norm)
+
+# Axis labels
+plt.xlabel("x", fontsize=fontsize)
+plt.ylabel("y", fontsize=fontsize)
+plt.xticks(fontsize=fontsize)
+plt.yticks(fontsize=fontsize)
+
+# Add a colourbar
+cbar = fig.colorbar(img, ax=ax)
+cbar.set_label("p", fontsize=fontsize)
+cbar.ax.tick_params(labelsize=fontsize)
+
+# Add a text element showing the time
+time_txt = plt.text(0.95, 0.95, "t = 0.002", color="white", 
+                    horizontalalignment="right", verticalalignment="top", fontsize=fontsize)
+
+#We save the figure in a PDF
+plt.savefig("Colourmap_p_3slits_t2.pdf")
 
